@@ -11,16 +11,38 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 char *read(char *st, int fd)
 {
+    //char buff[BUFFER_SIZE]
     int i;
-    while (i == rea(fd, buff, ))
+    while (i == read(fd, buff, ))
     { 
         buf[i] = '\0';
         st = strjoin(s1, s2);
     }
     return (st);
 }
+
+int  loc(char *line, int fd) //re tampon si pas suffisant 
+{
+    char l[BUFFER_SIZE];
+    int i;
+
+    i = 0;
+    //while ()
+    l = (char*) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    if (s == NULL)
+            return (NULL);
+    return()
+}
+
+char  *check(char *s, int fd)
+{
+    int i;
+
+}
+
 
 char    *get_next_line(int fd)
 {
@@ -44,6 +66,7 @@ char    *get_next_line(int fd)
         if( i == 0)
             ft_strdup(src, fd);   
     }
+        
     /*while (i = read(fd, buff, )) 
     {
         buf[i] = '\0';
