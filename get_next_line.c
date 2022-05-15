@@ -16,7 +16,7 @@ char *read(char *st, int fd)
 {
     //char buff[BUFFER_SIZE]
     int i;
-    while (i == read(fd, buff, ))
+    while (i == read(fd, buff, 0))
     { 
         buf[i] = '\0';
         st = strjoin(s1, s2);
@@ -24,25 +24,29 @@ char *read(char *st, int fd)
     return (st);
 }
 
-int  loc(char *line, int fd) //re tampon si pas suffisant 
+int  loc(size_t, int fd) //redimensionne la ligne 
 {
-    char l[BUFFER_SIZE];
-    int i;
+    char *s;
+    char *p;
 
-    i = 0;
-    //while ()
-    l = (char*) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+    s = (char*) malloc(sizeof(char) * (size +1)));
     if (s == NULL)
             return (NULL);
-    return()
+     size_t = 0;       
+    while (size > 0)
+    {
+        size--;
+        p++ = '/0';
+    }
+    return(s);
 }
 
-char  *check(char *s, int fd)
+/*char  *check(char *s, int fd)
 {
     int i;
 
 }
-
+*/
 
 char    *get_next_line(int fd)
 {
@@ -50,23 +54,26 @@ char    *get_next_line(int fd)
     char buf[BUFFER_SIZE + 1]; 
     char *line;
     int i;
+    char *tmp;
     //size_t n;
     //ssize_t read;
 
     i = 0;
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf,0) == - 1)
         return(-1);
-    if (!s)
+    if (!st)
         return (0);
-
-    if (st[i]) 
+    line = NULL; // if (line == NUll)
+    line = loc(t, fd);
+    if (st[i])
     {
         while(st[i] == '\n')
             i++;
         if( i == 0)
             ft_strdup(src, fd);   
     }
-        
+    else if (line)
+        //free(line);
     /*while (i = read(fd, buff, )) 
     {
         buf[i] = '\0';
