@@ -40,6 +40,20 @@ int  loc(size_t, int fd) //redimensionne la ligne
     return(s);
 }
 
+static char ft_rest(const char *line, int fd)// le reste 
+{
+    char i;
+
+    i = 0;
+    while(*i != line)
+    {
+        if(i != '\0' || i != '\n')
+        {
+            return(line);
+        }
+    return(NULL);
+    }
+}
 /*char  *check(char *s, int fd)
 {
     int i;
@@ -49,9 +63,9 @@ int  loc(size_t, int fd) //redimensionne la ligne
 
 char    *get_next_line(int fd)
 {
-    static char *st;
+    static char st[];
     char buf[BUFFER_SIZE + 1]; 
-    char *line;
+    char *line = NULL;
     int i; // valeur de retour
     char *tmp; //ligne temporaire
     //size_t n;
@@ -61,22 +75,24 @@ char    *get_next_line(int fd)
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, BUFFER_SIZE) == - 1)
         return(-1);
     if (!st)
-        return (0); 
+        return (0);a 
     line = loc(t, fd);
-    while (i = read(fd, buff, )) 
+    st = ft_rest(line,'\n');
+    while (i = read(fd, buff,BUFFER_SIZE > 0 )) 
     {
         buf[i] = '\0';
-        st = strjoin(st, buff);
+        line = strjoin(&line, buff);
+        free(line);   
     }
-    //return (st);
     while (st[i])
     {
         if (st[i] == '\n')
             i++;
-        if ( i == 0)
-            ft_strdup(src, fd); 
+        if (i == 0)
+        line = ft_strdup(src, fd); 
     }
     free(line);
     line = NULL; 
     
+    //return (0);
 }
