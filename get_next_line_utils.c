@@ -1,41 +1,52 @@
-char    *strcpy(char *dest, const char *src)
+/*char    *strcpy(char *dest, const char *st)
 {
 	size_t	i;
 	size_t	count;
 
 	count = 0;
-	while (src[count])
+	while (st[count])
 	{
 		count++;
 	}
 	i = 0;
 	if (size != 0)
 	{
-		while (src[i] && i < (size - 1))
+		while (st[i] && i < (size - 1))
 		{
-			dest[i] = src[i];
+			dest[i] = st[i];
 			i++;
 		}
 		dest[i] = '\0';
 	}
 	return (count);
 }
+*/
+#include "get_next_line.h"
+ssize_t	ft_strlen(const char *s)
+{
+	int i;
 
-char	*ft_strdup(char *src)
+	i = 0;
+	while (*s)
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(char *st)
 {
 	char	*cpy;
 	int		len;
 
 	len = 0;
-	while (src[len])
+	while (st[len])
 		len++;
 	cpy = (char *) malloc(sizeof(char) * (len +1));
 	if (cpy == NULL)
 		return (NULL);
 	len = 0;
-	while (src[len])
+	while (st[len])
 	{
-		cpy[len] = src[len];
+		cpy[len] = st[len];
 		len++;
 	}	
 	cpy[len] = '\0';
