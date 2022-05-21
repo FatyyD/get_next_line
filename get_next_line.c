@@ -12,18 +12,8 @@
 
 #include "get_next_line.h"
 
-/* char *read(char *st, int fd)
-{
-    int i;
-    while (i == read(fd, buff, 0))
-    {
-        buf[i] = '\0';
-        st = strjoin(s1, s2);
-    }
-    return (st);
-} */
 
-int  loc(size_t, int fd) //redimensionne la ligne 
+/*int  loc(size_t, int fd) //redimensionne la ligne 
 {
     char *s;
     char *p;
@@ -38,22 +28,24 @@ int  loc(size_t, int fd) //redimensionne la ligne
         p++ = '/0';
     }
     return(s);
-}
+}*/
 
-static char ft_rest(const char *line, int fd)// le reste 
+static char ft_save(char *line, char fd)// le reste 
 {
     char i;
 
     i = 0;
-    while(*i != line)
+    while()
     {
-        if(i != '\0' || i != '\n')
+        if(i == '\0' || i == '\n')
         {
-            return(line);
+            return (0);
         }
-    return(NULL);
+        i++;
     }
-}
+    return(i);
+} 
+
 /*char  *check(char *s, int fd)
 {
     int i;
@@ -63,36 +55,37 @@ static char ft_rest(const char *line, int fd)// le reste
 
 char    *get_next_line(int fd)
 {
-    static char st[];
+    static char *st = NULL;
     char buf[BUFFER_SIZE + 1]; 
-    char *line = NULL;
+    char *line;
     int i; // valeur de retour
     char *tmp; //ligne temporaire
     //size_t n;
     //ssize_t read;
 
     i = 0;
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, BUFFER_SIZE) == - 1)
-        return(-1);
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
+        return(0);
     if (!st)
-        return (0);a 
-    line = loc(t, fd);
-    st = ft_rest(line,'\n');
-    while (i = read(fd, buff,BUFFER_SIZE > 0 )) 
+        return (0); 
+    //line = loc(t, fd);
+    //st = ft_rest(line,'\n');
+    while (*st = ft_save(line, '\n') && i == read(fd, buf, BUFFER_SIZE > 0)) 
     {
         buf[i] = '\0';
-        line = strjoin(&line, buff);
-        free(line);   
+        line = ft_strjoin(line, buf);
+        free(line);
     }
+    //return (line[i]);
     while (st[i])
     {
         if (st[i] == '\n')
             i++;
         if (i == 0)
-        line = ft_strdup(src, fd); 
+        line = ft_strdup(st); 
     }
+    //*st = ft_substr();
     free(line);
     line = NULL; 
-    
-    //return (0);
+ //return (line[i]);
 }
