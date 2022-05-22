@@ -30,24 +30,55 @@
     return(s);
 }*/
 
-char *ft_strchr(const char *s, char c)// le reste 
+char *ft_strchr(const char *s, int c)// le reste 
 {
-    char *str:
+    char *str;
 
-    *str = (char *) c;
+    //str = NULL;
+    str = (char *) s;
 
-    whule (*str != c)
+    while (str || *str != c)
     {
+        printf("*C : %c\n", *str);
         if (*str == '\0')
                 return(NULL);
-        str++;        
+        str++;  
     }
+    printf("STR : %s\n", str);
+    fflush(stdout);
     return (str);
 } 
 
-/*char  *check(char *s, int fd)
+
+/*char    ft_save(char *line, char *buf)// le reste 
 {
     int i;
+
+    i = 0;
+    if (line[i] == ft_strchr(line, "\n"))
+    {
+        line[i] = buf[i];
+        i++;
+    }
+  buf[i] != '\0';
+  return (buf[i])
+}
+
+/*char  ft_save(char *s, int fd)
+{
+    int i;
+
+    i  = 0;
+
+    while(s[i])
+    {
+        if (s[i] != '\0' || s[i] != '\n')
+        {
+            return(s[i]);
+            i++;
+        }
+        return (0);
+    }
 
 }
 */
@@ -56,35 +87,50 @@ char    *get_next_line(int fd)
 {
     static char *st = NULL;
     char buf[BUFFER_SIZE + 1]; 
-    char *line;
+    char *line = NULL;
     int i; // valeur de retour
-    char *tmp; //ligne temporaire
+    //char *tmp; //ligne temporaire
     //size_t n;
     //ssize_t read;
 
     i = 0;
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
+    if (fd < 0 || BUFFER_SIZE <= 0)
         return(0);
-    if (!st)
-        return (0); 
+    i = read(fd, buf, BUFFER_SIZE);
+    //if (!st)
+     //   return (0); 
     //line = loc(t, fd);
     //st = ft_rest(line,'\n');
-    while (ft_strchr(line, '\n') == NULL && i == read(fd, buf, BUFFER_SIZE > 0)) 
+    if (i < 0)
+        return (0);
+    buf[i] = '\0';
+    line = ft_strjoin(line, buf);
+    while (ft_strchr(buf, '\n') == NULL && i == read(fd, buf, BUFFER_SIZE))
     {
+       // i = read(fd, buf, BUFFER_SIZE);
+        //if (i < 0)
+           // return (0);
+       printf("I = %d\n", i);
         buf[i] = '\0';
+        printf("BUF : %s\n", buf);
         line = ft_strjoin(line, buf);
-        free(line);
+        printf("LINE : %s\n", line);
+     //free(line);
     }
-    //return (line[i]);
-    while (st[i])
+   printf("LINE : %s\n", line);
+   fflush(stdout);
+    return (line);
+    if (!line)
+        return (0);
+    while (line[i])
     {
-        if (st[i] == '\n')
+        if (line[i] == '\n')
             i++;
         if (i == 0)
-        line = ft_strdup(st); 
+        line = ft_strdup(line); 
     }
-    //*line = ft_save()
+    //*line = ft_save(line, buf);
     free(line);
     line = NULL; 
- //return (line[i]);
+ //return (st);
 }
