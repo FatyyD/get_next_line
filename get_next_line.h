@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef GET_NEXT_LINE
+# define GET_NEXT_LINE
 # include <stdio.h>
 # include <stdarg.h>
 # include <stdlib.h>
