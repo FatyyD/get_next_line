@@ -30,20 +30,19 @@
     return(s);
 }*/
 
-static char ft_save(char *line, char fd)// le reste 
+char *ft_strchr(const char *s, char c)// le reste 
 {
-    char i;
+    char *str:
 
-    i = 0;
-    while()
+    *str = (char *) c;
+
+    whule (*str != c)
     {
-        if(i == '\0' || i == '\n')
-        {
-            return (0);
-        }
-        i++;
+        if (*str == '\0')
+                return(NULL);
+        str++;        
     }
-    return(i);
+    return (str);
 } 
 
 /*char  *check(char *s, int fd)
@@ -70,7 +69,7 @@ char    *get_next_line(int fd)
         return (0); 
     //line = loc(t, fd);
     //st = ft_rest(line,'\n');
-    while (*st = ft_save(line, '\n') && i == read(fd, buf, BUFFER_SIZE > 0)) 
+    while (ft_strchr(line, '\n') == NULL && i == read(fd, buf, BUFFER_SIZE > 0)) 
     {
         buf[i] = '\0';
         line = ft_strjoin(line, buf);
@@ -84,7 +83,7 @@ char    *get_next_line(int fd)
         if (i == 0)
         line = ft_strdup(st); 
     }
-    //*st = ft_substr();
+    //*line = ft_save()
     free(line);
     line = NULL; 
  //return (line[i]);
