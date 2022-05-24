@@ -50,18 +50,17 @@ char *ft_strchr(const char *s, int c)// le reste
 } 
 
 
-/*char    ft_save(char *line, char *buf)// le reste 
+static char    ft_save(char *line, int c)// le reste 
 {
     int i;
 
     i = 0;
-    if (line[i] == ft_strchr(line, "\n"))
+    if (ft_strchr(line, '\n') + 1)
     {
-        line[i] = buf[i];
+        return (line[i]);
         i++;
     }
-  buf[i] != '\0';
-  return (buf[i])
+  return (0);
 }
 
 /*char  ft_save(char *s, int fd)
@@ -93,21 +92,21 @@ char    *get_next_line(int fd)
     //size_t n;
     //ssize_t read;
 
-    i = 0;
+    //i = 0;
+    i = read(fd, buf, BUFFER_SIZE);
     if (fd < 0 || BUFFER_SIZE <= 0)
         return(0);
-    i = read(fd, buf, BUFFER_SIZE);
     //if (!st)
      //   return (0); 
     //line = loc(t, fd);
     //st = ft_rest(line,'\n');
     if (i < 0)
         return (0);
-    buf[i] = '\0';
-    line = ft_strjoin(line, buf);
+    //buf[i] = '\0';
+    //line = ft_strjoin(line, buf);
     while (ft_strchr(buf, '\n') == NULL && i == read(fd, buf, BUFFER_SIZE))
     {
-       // i = read(fd, buf, BUFFER_SIZE);
+       // = read(fd, buf, BUFFER_SIZE);
         //if (i < 0)
            // return (0);
        printf("I = %d\n", i);
@@ -119,17 +118,17 @@ char    *get_next_line(int fd)
     }
    printf("LINE : %s\n", line);
    fflush(stdout);
-    return (line);
+   /* return (line);
     if (!line)
-        return (0);
-    while (line[i])
+        return (0);*/
+   while (line[i])
     {
         if (line[i] == '\n')
             i++;
         if (i == 0)
         line = ft_strdup(line); 
     }
-    //*line = ft_save(line, buf);
+    *line = ft_save(line, '\n');
     free(line);
     line = NULL; 
  //return (st);
