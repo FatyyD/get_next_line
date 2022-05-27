@@ -3,14 +3,16 @@
 
 int main()
 {
-    int     k =0;
+    int     k = 0;
     int     fd;
     char    *s= 0;
 
     fd = open("text.txt", O_RDONLY);
+    s ="";
 
-    while ((s = get_next_line(fd)))
+    while (s!=NULL)
     {
+        s = get_next_line(fd);
         printf("[%d] : >%s<\n", k, s);
         free(s);
         k++;
