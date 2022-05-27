@@ -13,31 +13,44 @@
 #include "get_next_line.h"
 
 
-/*int  loc(size_t, int fd) //redimensionne la ligne 
+static size_t  ft_compt(const char *s)//avance et retourne la valeur 
+{
+    int i;
+
+    i = 0;
+    while (s[i] != '\0' && s[i] != '\n')
+    {
+        i++;
+    }
+    return(i);
+}
+
+
+char     *ft_save(size_t size) // recuperer le debut de la ligne
 {
     char *s;
     char *p;
 
-    s = (char*) malloc(sizeof(char) * (size +1)));
+    s = (char*) malloc(sizeof(char) * (size + 1));
     if (s == NULL)
-            return (NULL);
-     size_t = 0;       
-    while (size > 0)
+            return (0);
+    size = size + 1;
+    p = s;       
+    while (size-- > 0)
     {
-        size--;
-        p++ = '/0';
+        *p++ = '\0' ;
     }
     return(s);
-}*/
+}
 
-char *ft_strchr(const char *s, int c)// le reste 
+char *ft_strchr(const char *s, int c)// lorsqu'on est sur '\n'
 {
     char *str;
 
     //str = NULL;
     str = (char *) s;
 
-    while (str || *str != c)
+    while ( *str != c)
     {
         printf("*C : %c\n", *str);
         if (*str == '\0')
@@ -47,89 +60,57 @@ char *ft_strchr(const char *s, int c)// le reste
     printf("STR : %s\n", str);
     fflush(stdout);
     return (str);
-} 
-
-
-static char    ft_save(char *line, int c)// le reste 
-{
-    int i;
-
-    i = 0;
-    if (ft_strchr(line, '\n') + 1)
-    {
-        return (line[i]);
-        i++;
-    }
-  return (0);
 }
 
-/*char  ft_save(char *s, int fd)
+
+static char    *ft_reste(char *str, size_t *c)// le reste 
 {
-    int i;
 
-    i  = 0;
-
-    while(s[i])
+    if (ft_strchr(str , '\n'))
     {
-        if (s[i] != '\0' || s[i] != '\n')
-        {
-            return(s[i]);
-            i++;
-        }
-        return (0);
+        ft_strcpy(str, ft_strchr(str, '\n') + 1);
+        return(str);
     }
 
+    if(ft_compt(str) > 0)
+    {
+        ft_strcpy(str, ft_strchr(str, '\0'));
+        *c = 0;
+        return (str);
+    }
+  return (NULL);
 }
-*/
 
 char    *get_next_line(int fd)
 {
-    static char *st = NULL;
-    char buf[BUFFER_SIZE + 1]; 
-    char *line = NULL;
+    static char *str = NULL;
+    static char buf[BUFFER_SIZE + 1]; 
+    char *temp;
     int i; // valeur de retour
-    //char *tmp; //ligne temporaire
-    //size_t n;
-    //ssize_t read;
-
-    //i = 0;
-    i = read(fd, buf, BUFFER_SIZE);
-    if (fd < 0 || BUFFER_SIZE <= 0)
+    size_t c;
+    
+    c = 1;
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, BUFFER_SIZE) < 0)
         return(0);
-    //if (!st)
-     //   return (0); 
-    //line = loc(t, fd);
-    //st = ft_rest(line,'\n');
-    if (i < 0)
-        return (0);
-    //buf[i] = '\0';
-    //line = ft_strjoin(line, buf);
-    while (ft_strchr(buf, '\n') == NULL && i == read(fd, buf, BUFFER_SIZE))
+    if(str == NULL)
+        return(0);
+        printf("I = %d\n", i);
+    str = ft_save((0));
+    while (/*ft_strchr(str, '\n') == NULL && */i > 0)
     {
-       // = read(fd, buf, BUFFER_SIZE);
-        //if (i < 0)
-           // return (0);
-       printf("I = %d\n", i);
-        buf[i] = '\0';
-        printf("BUF : %s\n", buf);
-        line = ft_strjoin(line, buf);
-        printf("LINE : %s\n", line);
-     //free(line);
+        i = read(fd, buf, BUFFER_SIZE); // pr calculer i à chaque passage 
+        buf[i] = '\0'; // retourne le nb d'octet affiche la fin du fichier
+        temp = str;
+        str = ft_strjoin(temp, buf);
+         printf("STR : %s\n", str);
+        free(str);
     }
-   printf("LINE : %s\n", line);
-   fflush(stdout);
-   /* return (line);
-    if (!line)
-        return (0);*/
-   while (line[i])
-    {
-        if (line[i] == '\n')
-            i++;
-        if (i == 0)
-        line = ft_strdup(line); 
-    }
-    *line = ft_save(line, '\n');
-    free(line);
-    line = NULL; 
- //return (st);
+    printf("LINE : %s\n", str);
+    fflush(stdout);
+    str = ft_substr(str, 0, ft_compt(str)); //pour récuperer la premiere partie
+    if ((ft_reste(str, &c) != NULL) && c == 1) //recuperer le reste //stock;
+    return (0);
+   // free(str);
+  //  str = NULL; 
+ //return (0);
 }
