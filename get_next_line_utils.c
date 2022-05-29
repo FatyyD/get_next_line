@@ -1,6 +1,6 @@
 #include "get_next_line.h"
 
-char    *ft_strcpy(char *dest, char *st)
+/*char    *ft_strcpy(char *dest, char *st)
 {
 	size_t	size;
 	size_t	count;
@@ -50,22 +50,21 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		str[i++] = s[start++];
 	str[i] = '\0';
 	return (str);
-}
+}*/
 
-ssize_t	ft_strlen(const char *s)
+int ft_strlen(const char *s)
 {
 	int  i;
 
 	i = 0;
-	while (*s)
+	while (s[i])
 	{
-		s++;
 		i++;
 	}
 	return(i);
 }
 
-/*char	*ft_strdup(char *st)
+char	*ft_strdup(const char *st)
 {
 	char	*cpy;
 	int		len;
@@ -84,9 +83,9 @@ ssize_t	ft_strlen(const char *s)
 	}	
 	cpy[len] = '\0';
 	return (cpy);
-}*/
+}
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char  *s1, char  *s2)
 {
 	size_t	i;
 	size_t	j;

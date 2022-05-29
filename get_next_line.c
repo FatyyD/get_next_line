@@ -13,63 +13,82 @@
 #include "get_next_line.h"
 
 
-static size_t  ft_compt(const char *s)//avance et retourne la valeur 
+static int ft_compt( char *str)//avance et retourne la valeur 
 {
    int i;
 
     i = 0;
-    if(!s)
-    return(0);
     
-    while(s[i] != '\0' && s[i] != '\n')
+    while(str[i])
     {
+        if (str[i] == '\n')
+            return (1);
         i++;
     }
-    return(i);
+    return(0);
 }
 
 
-char     *ft_save(size_t size) // recuperer le debut de la ligne
+static char     *ft_save(char *str) // recuperer le debut de la ligne
 {
-    char *s;
-    char *p;
+    int i;
+    int len;
 
-    s = (char*) malloc(sizeof(char) * (size + 1));
-    if (s == NULL)
-            return (0);
-    size = size + 1;
-    p = s;       
-    while (size-- > 0)
+    char *dest;
+
+    i = 0;
+   while (str[i] != '\0' && str[i] != '\n')
+        i++;
+    len = i + 1;
+   dest = malloc(sizeof(char) * (len + 1));
+    if (!dest)
+            return (NULL);
+    i = 0;     
+    while (str[i] != '\0' && i < len)
     {
-        *p++ = '\0' ;
+        dest[i] = str[i];
+        i++;
     }
-    return(s);
+    dest[i] = '\0';
+    return(dest);
 }
 
-static char *ft_strchr(const char *s, int c)// lorsqu'on est sur '\n'
+char *ft_strchr(char *s, int c)// lorsqu'on est sur '\n'
 {
-    char *str;
 
-   // str = NULL;
-    str = (char *) s;
-    /*if(!s)
-    return(0);*/
-    while (*str != (char) c)
-    {   
-        {
+    while (*s != '\0' && *s != (char)c)
+          s++;
       // printf("*C : %c\n", *str);
-         if (*str == '\0')
-                return(NULL);
-        }
-    str++;
-    }
+    if (*s == (char)c && *s != '\0')
+            return(s + 1);
+    else if (*s == '\0')
+            return (s);
   /* printf("STR : %s\n", str);
     fflush(stdout);*/
-    return (str);
+    return (NULL);
 }
 
+static char     *ft_reste(char *str)
+{
+    char *temp;
+    char *line;
 
-static char    *ft_reste(char *str, size_t *c)// le reste 
+    unsigned int len;
+    temp = ft_strchr(str, '\n');
+    len = ft_strlen(temp);
+    line = malloc(sizeof(char)* (len + 1));
+    if (!line)
+        return(NULL);
+    len = 0;
+    while (temp[len] != '\0')
+    {
+        line[len] = temp[len];
+        len++;
+    }
+    line[len] = '\0';
+    return (line);
+}
+/*static char    *ft_reste(char *str)// le reste 
 {
 
     if (ft_strchr(str , '\n'))
@@ -81,45 +100,51 @@ static char    *ft_reste(char *str, size_t *c)// le reste
     if(ft_compt(str) > 0)
     {
         ft_strcpy(str, ft_strchr(str, '\0'));
-        *c = 0;
         return (str);
     }
-  return (NULL);
+  return (str);
+}*/
+
+static char *ft_renvoi(char **str, char **line, int i)
+{
+    if (i == 0 && **line == '\0')
+    {
+        free(*line);
+        free(*str);
+        *str = NULL;
+        return (NULL);
+    }
+    return (*line);
 }
 
 char    *get_next_line(int fd)
 {
     static char *str = NULL;
-    static char buf[BUFFER_SIZE + 1]; 
-   char *temp;
-    char *temp2;
-    int i; // valeur de retour
-    size_t c;
+    char buf[BUFFER_SIZE + 1];
+    char *line;  
+    char *temp;
+    int i; // valeur de retour read
     
-    c = 1;
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, BUFFER_SIZE) == -1)
-        return(0);
-        str = buf;
-    if (str == NULL && (ft_compt((0)) ==  0))
-            return(0);
-        //printf("I = %d\n", i);
-    while (ft_strchr(str, '\n') == NULL && (i > 0))
+   i = 1;
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
+        return(NULL);
+    //str = buf;
+    if (str == 0)
+    str = ft_strdup("\0");
+    while (!ft_compt(str) && i  > 0)
     {
-        i = read(fd, buf, BUFFER_SIZE); // pr calculer i à chaque passage 
+         i = read(fd, buf, BUFFER_SIZE);       // pr calculer i à chaque passage 
         buf[i] = '\0'; // retourne le nb d'octet affiche la fin du fichier
-        //temp = str;
-        str = ft_strjoin(temp, buf);
-        //free(str);
-     // printf("STR : %s\n", str);
+        str = ft_strjoin(str, buf);
+       //free(temp);
+     //printf("STR : %s\n", str);
     }
  /* printf("str: %s\n", str);
     fflush(stdout);*/
-    str = ft_substr(str, 0, ft_compt(str));//pour récuperer la premiere partie
-//str = ft_reste(str, &c);
-    //str = ft_reste(str, &c);
-    if ((*str = ft_reste(str, &c) != NULL) && c == 1) //recuperer le reste //stock;
-    return (0);
+    line = ft_save(str);//pour récuperer la premiere partie
+    temp = ft_reste(str); //recuperer le reste //stock
     free(str);
-  str = NULL;
- return (str);
+    str = ft_strdup(temp);
+    free(temp);
+ return (ft_renvoi(&str, &line, i));
 }
