@@ -73,7 +73,7 @@ char	*ft_strdup(const char *st)
 	while (st[len])
 		len++;
 	cpy = (char *) malloc(sizeof(char) * (len +1));
-	if (cpy == NULL)
+	if (!cpy)
 		return (NULL);
 	len = 0;
 	while (st[len])
@@ -96,7 +96,7 @@ char	*ft_strjoin(char  *s1, char  *s2)
 	i = 0;
 	j = 0;
 	str = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (str == NULL)
+	if (!str)
 		return (NULL);
 	while (s1[i])
 	{

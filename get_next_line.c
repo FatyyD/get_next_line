@@ -13,9 +13,9 @@
 #include "get_next_line.h"
 
 
-static int ft_compt( char *str)//avance et retourne la valeur 
+static int ft_compt(char *str)
 {
-   int i;
+       int i;
 
     i = 0;
     
@@ -29,7 +29,7 @@ static int ft_compt( char *str)//avance et retourne la valeur
 }
 
 
-static char     *ft_save(char *str) // recuperer le debut de la ligne
+static char     *ft_save(char *str) 
 {
     int i;
     int len;
@@ -53,18 +53,15 @@ static char     *ft_save(char *str) // recuperer le debut de la ligne
     return(dest);
 }
 
-char *ft_strchr(char *s, int c)// lorsqu'on est sur '\n'
+char *ft_strchr(char *s, int c)
 {
 
     while (*s != '\0' && *s != (char)c)
           s++;
-      // printf("*C : %c\n", *str);
     if (*s == (char)c && *s != '\0')
             return(s + 1);
     else if (*s == '\0')
             return (s);
-  /* printf("STR : %s\n", str);
-    fflush(stdout);*/
     return (NULL);
 }
 
@@ -88,22 +85,6 @@ static char     *ft_reste(char *str)
     line[len] = '\0';
     return (line);
 }
-/*static char    *ft_reste(char *str)// le reste 
-{
-
-    if (ft_strchr(str , '\n'))
-    {
-        ft_strcpy(str, ft_strchr(str, '\n') + 1);
-        return(str);
-    }
-
-    if(ft_compt(str) > 0)
-    {
-        ft_strcpy(str, ft_strchr(str, '\0'));
-        return (str);
-    }
-  return (str);
-}*/
 
 static char *ft_renvoi(char **str, char **line, int i)
 {
@@ -119,30 +100,25 @@ static char *ft_renvoi(char **str, char **line, int i)
 
 char    *get_next_line(int fd)
 {
-    static char *str = NULL;
-    char buf[BUFFER_SIZE + 1];
-    char *line;  
+    static char *str;
+    char  buf[BUFFER_SIZE + 1];
+    char *line;
     char *temp;
-    int i; // valeur de retour read
+    int i;
     
    i = 1;
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
         return(NULL);
-    //str = buf;
     if (str == 0)
     str = ft_strdup("\0");
     while (!ft_compt(str) && i  > 0)
     {
-         i = read(fd, buf, BUFFER_SIZE);       // pr calculer i à chaque passage 
-        buf[i] = '\0'; // retourne le nb d'octet affiche la fin du fichier
+         i = read(fd, buf, BUFFER_SIZE);
+        buf[i] = '\0'; 
         str = ft_strjoin(str, buf);
-       //free(temp);
-     //printf("STR : %s\n", str);
     }
- /* printf("str: %s\n", str);
-    fflush(stdout);*/
-    line = ft_save(str);//pour récuperer la premiere partie
-    temp = ft_reste(str); //recuperer le reste //stock
+    line = ft_save(str);
+    temp = ft_reste(str);
     free(str);
     str = ft_strdup(temp);
     free(temp);
