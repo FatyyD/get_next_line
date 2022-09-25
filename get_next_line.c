@@ -97,15 +97,24 @@ static char *ft_renvoi(char **str, char **line, int i)
     }
     return (*line);
 }
-
+void ft_free_str(char **str)
+{
+    if (str != NULL && *str != 0)
+    {
+        free(*str);
+        *str = NULL;
+    }
+}
 char    *get_next_line(int fd)
 {
     static char *str;
-    char  buf[BUFFER_SIZE + 1];
+    char  *buf; //[BUFFER_SIZE + 1];
     char *line;
     char *temp;
     int i;
-    
+    buf = malloc(sizeof *buf * (BUFFER_SIZE + 1));
+   if (!buf)
+    return(NULL);
    i = 1;
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) == -1)
         return(NULL);
@@ -119,6 +128,7 @@ char    *get_next_line(int fd)
     }
     line = ft_save(str);
     temp = ft_reste(str);
+    ft_free_str(&str);
     free(str);
     str = ft_strdup(temp);
     free(temp);
